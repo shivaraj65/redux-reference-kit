@@ -1,23 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
+import { counterAction } from "./store/index";
 
 function App() {
+  const dispatch = useDispatch();
+  const number = useSelector((state) => state.number);
+  const view = useSelector((state) => state.view);
+
+  // const [number, setNumber] = useState(0);
+
+  const increment = () => {
+    //legacy redux way
+    // dispatch({ type: "increment" });
+
+    //new toolkit way
+    dispatch(counterAction.increment());
+  };
+
+  const decrement = () => {
+    // dispatch({ type: "decrement" });
+
+    dispatch(counterAction.decrement());
+  };
+
+  const increase = () => {
+    // dispatch({ type: "increase", value: 10 });
+
+    dispatch(counterAction.increase({value : 10}));
+  };
+
+  const vieworhide = () => {
+    // dispatch({ type: "view" });
+
+    dispatch(counterAction.view());
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {view ? <span>count :{number}</span> : null}
+
+      <button
+        onClick={() => {
+          increment();
+        }}
+      >
+        increment
+      </button>
+      <button
+        onClick={() => {
+          decrement();
+        }}
+      >
+        decrement
+      </button>
+      <button
+        onClick={() => {
+          increase();
+        }}
+      >
+        increase by 10
+      </button>
+      <button
+        onClick={() => {
+          vieworhide();
+        }}
+      >
+        show or hide
+      </button>
     </div>
   );
 }
