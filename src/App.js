@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
-import { counterAction } from "./store/index";
+import { counterAction } from "./store/slices/counter";
+import Login from "./components/login";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function App() {
   const increase = () => {
     // dispatch({ type: "increase", value: 10 });
 
-    dispatch(counterAction.increase({value : 10}));
+    dispatch(counterAction.increase({ value: 10 }));
   };
 
   const vieworhide = () => {
@@ -68,6 +69,7 @@ function App() {
       >
         show or hide
       </button>
+      <Login />
     </div>
   );
 }

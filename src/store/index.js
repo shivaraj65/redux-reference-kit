@@ -1,24 +1,7 @@
-import { createStore } from "redux";
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-
-const counterSlice = createSlice({
-  name: "counter", //all slice needs a name, can have multiple slice.
-  initialState: { number: 0, view: true },
-  reducers: {
-    increment(state) {
-      state.number++;
-    },
-    increase(state, action) {
-      state.number = state.number + action.payload.value;
-    },
-    decrement(state) {
-      state.number--;
-    },
-    view(state) {
-      state.view = !state.view;
-    },
-  },
-});
+// import { createStore } from "redux";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import counterSlice from "./slices/counter";
+import authSlice from "./slices/auth";
 
 //way of declaring reducers without toolkit.
 // const counterReducer = (state = { number: 0, view: true }, action) => {
@@ -54,11 +37,19 @@ const counterSlice = createSlice({
 
 // const store = createStore(counterSlice.reducer); //createStore only aloows one reducer as argument for more reducers follow below statement
 
-const store = configureStore({
-  reducer:counterSlice.reducer    //this is one method if, only one slice
-  // reducer: { counter: counterSlice.reducer }, //for multiple slice create a obj any ky name and reducers
-});
+// Combine reducers into a single root reducer
+// const rootReducer = combineReducers({
+//   counter: counterSlice,
+//   auth: AuthSlice,
+// });
 
-export const counterAction = counterSlice.actions; //you have to export actions if using slices..
+//for some reason combineReducers are not working, only single reducers are working
+const store = configureStore({
+  reducer: counterSlice, //pass the reducer here for the store.
+  // reducer: combineReducers({
+  //   1: counterSlice.reducer,
+  //   2: authSlice.reducer,
+  // }),
+});
 
 export default store;
